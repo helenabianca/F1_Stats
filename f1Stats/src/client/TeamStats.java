@@ -36,6 +36,7 @@ public class TeamStats extends Stats{
     public static TeamStats getTeamStats(String season, String name){
         TeamStats stats = new TeamStats();
         APIConnection.getTeamStats(season, name, stats);
+        APIConnection.getDriversForTheTeam(season, name, stats);
         return stats;
     }
 

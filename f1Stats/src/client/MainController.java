@@ -128,7 +128,8 @@ public class MainController {
                 new TableRow("Name", teamStats.getTeamName()),
                 new TableRow("Championship position", String.valueOf(teamStats.getPosition())),
                 new TableRow("Points", String.valueOf(teamStats.getPoints())),
-                new TableRow("Number of wins", String.valueOf(teamStats.getNumberOfWins()))
+                new TableRow("Number of wins", String.valueOf(teamStats.getNumberOfWins())),
+                new TableRow("Drivers", teamStats.getDrivers().get(0) + ", " + teamStats.getDrivers().get(1))
         );
     }
 }
