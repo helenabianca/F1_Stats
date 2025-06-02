@@ -35,6 +35,12 @@ public class DriverStats extends Stats{
         this.driverNumber = driverNumber;
     }
 
+    /**
+     * retrieves the data for a driver during a season
+     * @param season specified season
+     * @param driverId specified driverId
+     * @return stats for that driver
+     */
     public static DriverStats getDriverStats(String season, String driverId) {
         DriverStats driver = new DriverStats();
         APIConnection.getDriverBasicStats(season, driverId, driver);

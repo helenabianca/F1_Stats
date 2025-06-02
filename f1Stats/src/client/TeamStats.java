@@ -27,6 +27,12 @@ public class TeamStats extends Stats{
         this.drivers = drivers;
     }
 
+    /**
+     * retrieves the data for a team during a season
+     * @param season specified season
+     * @param name specified team name
+     * @return data for that team
+     */
     public static TeamStats getTeamStats(String season, String name){
         TeamStats stats = new TeamStats();
         APIConnection.getTeamStats(season, name, stats);

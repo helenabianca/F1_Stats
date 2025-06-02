@@ -11,6 +11,14 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class APIConnection {
+
+
+    /**
+     * the method retrieves the basic statistics for a specific driver during a season
+     * @param season specified season
+     * @param driverId specified driverId
+     * @param driverStats DriverStats
+     */
     public static void getDriverBasicStats(String season, String driverId, DriverStats driverStats) {
         try{
             String urlString = "http://ergast.com/api/f1/" + season + "/drivers/" + driverId +"/driverStandings.json";
@@ -68,6 +76,12 @@ public class APIConnection {
         }
     }
 
+    /**
+     * the method retrieves the other statistics for a driver
+     * @param season specified season
+     * @param driverId specified driverId
+     * @param driverStats DriverStats
+     */
     public static void getOtherStats(String season, String driverId, DriverStats driverStats) {
         try{
             String urlString = "http://ergast.com/api/f1/" + season + "/drivers/" + driverId +"/results.json";
@@ -155,6 +169,12 @@ public class APIConnection {
         }
     }
 
+    /**
+     * the method retrieves the statistics for a team during a season
+     * @param season specified season
+     * @param teamId specified teamId
+     * @param teamStats TeamStats
+     */
     public static void getTeamStats(String season, String teamId, TeamStats teamStats) {
         try{
             String urlString = "http://ergast.com/api/f1/" + season + "/constructors/" + teamId +"/constructorStandings.json";
