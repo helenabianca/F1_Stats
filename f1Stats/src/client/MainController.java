@@ -90,6 +90,10 @@ public class MainController {
         }
     }
 
+    /**
+     * show stats for a driver
+     * @param driverStats stats
+     */
     public void showDriverStats(DriverStats driverStats) {
         statsTable.getColumns().clear();
         statsTable.getItems().clear();
@@ -115,6 +119,10 @@ public class MainController {
         );
     }
 
+    /**
+     * show stats for a team
+     * @param teamStats stats
+     */
     public void showTeamStats(TeamStats teamStats) {
         statsTable.getColumns().clear();
         statsTable.getItems().clear();
@@ -126,10 +134,14 @@ public class MainController {
         statsTable.getColumns().addAll(labelColumn, valueColumn);
         statsTable.getItems().addAll(
                 new TableRow("Name", teamStats.getTeamName()),
+                new TableRow("Drivers", teamStats.getDrivers().get(0) + ", " + teamStats.getDrivers().get(1)),
                 new TableRow("Championship position", String.valueOf(teamStats.getPosition())),
                 new TableRow("Points", String.valueOf(teamStats.getPoints())),
                 new TableRow("Number of wins", String.valueOf(teamStats.getNumberOfWins())),
-                new TableRow("Drivers", teamStats.getDrivers().get(0) + ", " + teamStats.getDrivers().get(1))
+                new TableRow("Number of Podiums", String.valueOf(teamStats.getNumberOfPodiums())),
+                new TableRow("Number of DNFs", String.valueOf(teamStats.getNumberOfDNF())),
+                new TableRow("Number of DSQs", String.valueOf(teamStats.getNumberOfDSQ())),
+                new TableRow("Number of DNSs", String.valueOf(teamStats.getNumberOfDNS()))
         );
     }
 }

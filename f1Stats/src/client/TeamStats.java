@@ -37,6 +37,16 @@ public class TeamStats extends Stats{
         TeamStats stats = new TeamStats();
         APIConnection.getTeamStats(season, name, stats);
         APIConnection.getDriversForTheTeam(season, name, stats);
+        String driver1 = stats.getDrivers().get(0).split(" ")[1].toLowerCase();
+        String driver2 = stats.getDrivers().get(1).split(" ")[1].toLowerCase();
+        DriverStats driver1Stats = DriverStats.getDriverStats(season , driver1);
+        DriverStats driver2Stats = DriverStats.getDriverStats(season , driver2);
+        System.out.println(driver1Stats);
+        System.out.println(driver2Stats);
+        stats.setNumberOfDNF(driver1Stats.getNumberOfDNF() + driver2Stats.getNumberOfDNF());
+        stats.setNumberOfDNS(driver1Stats.getNumberOfDNS() + driver2Stats.getNumberOfDNS());
+        stats.setNumberOfDSQ(driver1Stats.getNumberOfDSQ() + driver2Stats.getNumberOfDSQ());
+        stats.setNumberOfPodiums(driver1Stats.getNumberOfPodiums() + driver2Stats.getNumberOfPodiums());
         return stats;
     }
 
