@@ -87,10 +87,22 @@
             <Line fx:id="line2" endX="-13.200017929077148" endY="-21.199993133544922" layoutX="44.0" layoutY="79.0" startX="-13.200017929077148" startY="261.2000427246094" />
             <Line fx:id="line3" endX="380.199951171875" endY="-1.1444091796875E-5" layoutX="145.0" layoutY="340.0" startX="-115.00003814697266" startY="-1.1444091796875E-5" />
             <Line fx:id="line4" endX="-41.4000244140625" endY="173.49996948242188" layoutX="565.0" layoutY="166.0" startX="-41.4000244140625" startY="-107.39997863769531" />
+            <TableView fx:id="championship" layoutX="548.0" layoutY="56.0" prefHeight="282.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="position" prefWidth="43.99993896484375" text="C1" />
+                <TableColumn fx:id="name" prefWidth="156.0" text="C2" />
+              </columns>
+            </TableView>
+            <Label layoutX="586.0" layoutY="27.0" text="Driver standings" textFill="#641b2e">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
          </children>
          <VBox.margin>
             <Insets />
          </VBox.margin>
       </Pane>
+      <Label text="Label" />
    </children>
 </VBox>

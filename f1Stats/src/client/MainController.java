@@ -51,6 +51,15 @@ public class MainController {
     @FXML
     private TableColumn<TableRow, String> valueColumn;
 
+    @FXML
+    private TableView<TableRow> championship;
+
+    @FXML
+    private TableColumn<TableRow, String> position;
+
+    @FXML
+    private TableColumn<TableRow, String> name;
+
 
     public void initialize() {
         typeChoiceBox.getItems().addAll("Driver", "Team");
