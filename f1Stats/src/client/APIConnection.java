@@ -6,10 +6,7 @@ import org.json.simple.parser.JSONParser;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class APIConnection {
 
@@ -163,7 +160,7 @@ public class APIConnection {
      */
     public static void getTeamStats(String season, String teamId, TeamStats teamStats) {
         try{
-            String urlString = "http://ergast.com/api/f1/" + season + "/constructors/" + teamId +"/constructorStandings.json";
+            String urlString = "https://f1api.dev/api/" + season + "/teams/" + teamId + "/drivers";
             URL url = new URL(urlString);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -183,73 +180,28 @@ public class APIConnection {
 
                 JSONParser parser = new JSONParser();
                 JSONObject jsonObject = (JSONObject) parser.parse(String.valueOf(output));
-                JSONObject obj = (JSONObject) jsonObject.get("MRData");
-                JSONObject standingsTable = (JSONObject) obj.get("StandingsTable");
-
-                JSONArray standingList = (JSONArray) standingsTable.get("StandingsLists");
-                if(standingList.isEmpty()){
-                    System.out.println("No data found for "+ teamId + " in " + season);
-                    return;
+                JSONObject team = (JSONObject) jsonObject.get("team");
+                long position = (long) team.get("position");
+                teamStats.setPosition((int) position);
+                long points = (long) team.get("points");
+                teamStats.setPoints((int) points);
+                long wins = (long) team.get("wins");
+                teamStats.setNumberOfWins((int) wins);
+                String name = (String) team.get("teamName");
+                teamStats.setTeamName(name);
+                JSONArray drivers = (JSONArray) jsonObject.get("drivers");
+                List<String> driverList = new ArrayList<>();
+                for(Object d : drivers){
+                    JSONObject dr = (JSONObject) d;
+                    JSONObject driver = (JSONObject) dr.get("driver");
+                    String name2 = (String) driver.get("name");
+                    String surname = (String) driver.get("surname");
+                    driverList.add(name2 + " " + surname);
                 }
-                JSONObject object = (JSONObject) standingList.get(0);
-                JSONArray standings = (JSONArray) object.get("ConstructorStandings");
-                JSONObject s = (JSONObject) standings.get(0);
-                teamStats.setPoints(Integer.parseInt((String) s.get("points")));
-                teamStats.setNumberOfWins(Integer.parseInt((String) s.get("wins")));
-                teamStats.setPosition(Integer.parseInt((String) s.get("position")));
-                JSONObject constructors = (JSONObject) s.get("Constructor");
-                teamStats.setTeamName(constructors.get("name").toString());
+                teamStats.setDrivers(driverList);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
-    /**
-     * for a specific team get the drivers that raced for it in a season
-     * @param season specified season
-     * @param teamId specified team
-     * @param teamStats TeamStats
-     */
-    public static void getDriversForTheTeam(String season, String teamId,TeamStats teamStats) {
-        try{
-            String urlString = "http://ergast.com/api/f1/"+ season +"/constructors/"+ teamId +"/drivers.json";
-            URL url = new URL(urlString);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            con.connect();
-            int responseCode = con.getResponseCode();
-            if(responseCode!=200){
-                throw new RuntimeException("Failed : HTTP error code : "+ responseCode);
-            }
-            else {
-                StringBuilder output = new StringBuilder();
-                Scanner scanner = new Scanner(url.openStream());
-                while (scanner.hasNext()) {
-                    output.append(scanner.nextLine());
-                }
-                scanner.close();
-                JSONParser parser = new JSONParser();
-                JSONObject jsonObject = (JSONObject) parser.parse(String.valueOf(output));
-                JSONObject obj = (JSONObject) jsonObject.get("MRData");
-                JSONObject driverTable = (JSONObject) obj.get("DriverTable");
-                JSONArray drivers = (JSONArray) driverTable.get("Drivers");
-                JSONObject driver1 = (JSONObject) drivers.get(0);
-                JSONObject driver2 = (JSONObject) drivers.get(1);
-                String firstName1 = (String) driver1.get("givenName");
-                String lastName1 = (String) driver1.get("familyName");
-                String nameDriver1 = firstName1 + " "+ lastName1;
-                String firstName2 = (String) driver2.get("givenName");
-                String lastName2 = (String) driver2.get("familyName");
-                String nameDriver2 = firstName2 +" "+ lastName2;
-                teamStats.setDrivers(List.of(nameDriver1, nameDriver2));
-
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
 }
