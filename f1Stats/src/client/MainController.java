@@ -13,6 +13,12 @@ public class MainController {
     private Button statsButton;
 
     @FXML
+    private Button comparisonButton;
+
+    @FXML
+    private Button predictionButton;
+
+    @FXML
     private TextField textName;
 
     @FXML
@@ -66,6 +72,7 @@ public class MainController {
         typeChoiceBox.setValue("Driver");
         labelColumn.setCellValueFactory(cellData -> cellData.getValue().labelProperty());
         valueColumn.setCellValueFactory(cellData -> cellData.getValue().valueProperty());
+        enableClickedStyle(statsButton);
     }
 
     @FXML
@@ -152,5 +159,17 @@ public class MainController {
                 new TableRow("Number of DSQs", String.valueOf(teamStats.getNumberOfDSQ())),
                 new TableRow("Number of DNSs", String.valueOf(teamStats.getNumberOfDNS()))
         );
+    }
+
+    /**
+     * action done when the button is clicked
+     * @param button the button clicked
+     */
+    private void enableClickedStyle(Button button) {
+        button.setOnMouseClicked(e -> {
+            if (!button.getStyleClass().contains("clicked")) {
+                button.getStyleClass().add("clicked");
+            }
+        });
     }
 }

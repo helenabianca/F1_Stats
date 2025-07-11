@@ -1,0 +1,18 @@
+.choice-box{
+    -fx-background-color: #BE5B50;
+    -fx-mark-color: #fbdb93;
+}
+.choice-box > .label {
+    -fx-text-fill: #fbdb93;
+    -fx-font-size: 13px;
+}
+.context-menu{
+    -fx-background-color: #BE5B50;
+}
+.menu-item > .label{
+    -fx-text-fill: #fbdb93;
+}
+.menu-item:hover{
+    -fx-background-color: #641B2E;
+}
+

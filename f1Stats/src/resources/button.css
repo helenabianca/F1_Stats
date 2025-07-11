@@ -1,0 +1,21 @@
+.button {
+    -fx-text-fill: #fbdb93;
+    -fx-border-width: 1px;
+    -fx-transition: all 0.3s;
+    -fx-font-family: Kristen ITC;
+    -fx-pref-height: 43px;
+    -fx-padding: 5px;
+    -fx-font-size: 16px;
+}
+.button:hover {
+    -fx-text-fill: #330000;
+}
+.button:pressed {
+    -fx-text-fill:  #FCE7C8;
+    -fx-translate-y: 1px;
+}
+.button.clicked {
+    -fx-text-fill: #330000;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
