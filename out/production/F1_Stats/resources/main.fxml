@@ -47,8 +47,8 @@
          <children>
             <TextField fx:id="textName" layoutX="180.0" layoutY="14.0" prefHeight="25.0" prefWidth="178.0" promptText="Enter driver/team name" visible="false" />
             <TextField fx:id="textSeason" layoutX="389.0" layoutY="14.0" prefHeight="25.0" prefWidth="84.0" promptText="Season" visible="false" />
-            <Button fx:id="searchButton" layoutX="509.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchButtonClicked" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #BE5B50;" text="Search" textFill="#fbdb93" visible="false" />
-            <TableView fx:id="statsTable" layoutX="44.0" layoutY="79.0" prefHeight="259.0" prefWidth="470.0" visible="false">
+            <Button fx:id="searchButton" layoutX="509.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchButtonClicked" prefHeight="25.0" prefWidth="77.0" stylesheets="@searchButton.css" text="Search" textFill="#fbdb93" visible="false" />
+            <TableView fx:id="statsTable" layoutX="44.0" layoutY="79.0" prefHeight="259.0" prefWidth="470.0" stylesheets="@table.css" visible="false">
               <columns>
                 <TableColumn fx:id="labelColumn" prefWidth="209.60001373291016" text="label" />
                 <TableColumn fx:id="valueColumn" minWidth="0.0" prefWidth="227.99996948242188" text="value" />
@@ -87,6 +87,12 @@
             <Line fx:id="line2" endX="-13.200017929077148" endY="-21.199993133544922" layoutX="44.0" layoutY="79.0" startX="-13.200017929077148" startY="261.2000427246094" />
             <Line fx:id="line3" endX="380.199951171875" endY="-1.1444091796875E-5" layoutX="145.0" layoutY="340.0" startX="-115.00003814697266" startY="-1.1444091796875E-5" />
             <Line fx:id="line4" endX="-41.4000244140625" endY="173.49996948242188" layoutX="565.0" layoutY="166.0" startX="-41.4000244140625" startY="-107.39997863769531" />
+            <Pane fx:id="pane" layoutX="547.0" layoutY="54.0" prefHeight="282.0" prefWidth="215.0" style="-fx-background-color: #BE5B50;" visible="false">
+               <children>
+                  <Label fx:id="text1" ellipsisString="" layoutX="9.0" layoutY="14.0" lineSpacing="1.0" prefHeight="101.0" prefWidth="206.0" stylesheets="@labelInfo.css" text="for driver name - enter the family name of the driver in lower letters eg &quot;leclerc&quot;" wrapText="true" />
+                  <Label fx:id="text2" layoutX="9.0" layoutY="103.0" prefHeight="165.0" prefWidth="200.0" stylesheets="@labelInfo.css" text="for team name - enter the team name in lower letters, if the name is composed by 2 words connect them with _ eg &quot;aston_martin&quot;" wrapText="true" />
+               </children>
+            </Pane>
          </children>
          <VBox.margin>
             <Insets />
