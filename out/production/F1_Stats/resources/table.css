@@ -1,0 +1,22 @@
+.table-column{
+    -fx-background-color: #BE5B50;
+    -fx-text-fill: #fbdb93;
+    -fx-font-size: 14px;
+    -fx-table-cell-border-color: #330000;
+    -fx-table-cell-border-radius: 5px;
+}
+.table-view .column-header .label{
+    -fx-text-fill: #330000;
+    -fx-font-weight: bold;
+}
+.table-view{
+    -fx-background-color: #BE5B50;
+}
+.table-view .scroll-bar:vertical,
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: #BE5B50;
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color: #641B2E;
+}

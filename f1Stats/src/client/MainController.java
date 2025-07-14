@@ -3,9 +3,12 @@ package client;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 
 public class MainController {
+    @FXML
+    private Pane pane;
     @FXML
     private ChoiceBox<String> typeChoiceBox;
 
@@ -31,8 +34,12 @@ public class MainController {
     private Label welcomeLabel;
 
     @FXML
-    private Label l1;
+    private Label text1;
+    @FXML
+    private Label text2;
 
+    @FXML
+    private Label l1;
     @FXML
     private Label l2;
     @FXML
@@ -90,6 +97,7 @@ public class MainController {
         line2.setVisible(false);
         line3.setVisible(false);
         line4.setVisible(false);
+        pane.setVisible(true);
     }
 
     @FXML
