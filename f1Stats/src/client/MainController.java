@@ -22,13 +22,19 @@ public class MainController {
     private Button predictionButton;
 
     @FXML
-    private TextField textName;
+    private TextField textName1;
+
+    @FXML
+    private TextField textName2;
 
     @FXML
     private TextField textSeason;
 
     @FXML
     private Button searchButton;
+
+    @FXML
+    private Button searchButton2;
 
     @FXML
     private Label welcomeLabel;
@@ -65,6 +71,9 @@ public class MainController {
     private TableColumn<TableRow, String> valueColumn;
 
     @FXML
+    private TableColumn<TableRow, String> value2Column;
+
+    @FXML
     private TableView<TableRow> championship;
 
     @FXML
@@ -79,15 +88,12 @@ public class MainController {
         typeChoiceBox.setValue("Driver");
         labelColumn.setCellValueFactory(cellData -> cellData.getValue().labelProperty());
         valueColumn.setCellValueFactory(cellData -> cellData.getValue().valueProperty());
+        value2Column.setCellValueFactory(cellData -> cellData.getValue().valueProperty2());
         enableClickedStyle(statsButton);
+        enableClickedStyle(comparisonButton);
     }
 
-    @FXML
-    private void statsButtonClicked() {
-        typeChoiceBox.setVisible(true);
-        textName.setVisible(true);
-        textSeason.setVisible(true);
-        searchButton.setVisible(true);
+    private void visible(){
         welcomeLabel.setVisible(false);
         l1.setVisible(false);
         l2.setVisible(false);
@@ -98,13 +104,32 @@ public class MainController {
         line3.setVisible(false);
         line4.setVisible(false);
         pane.setVisible(true);
+        typeChoiceBox.setVisible(true);
+        textName1.setVisible(true);
+        textSeason.setVisible(true);
+    }
+
+    @FXML
+    private void statsButtonClicked() {
+        searchButton.setVisible(true);
+        textName2.setVisible(false);
+        searchButton2.setVisible(false);
+        visible();
+    }
+
+    @FXML
+    private void comparisonButtonClicked() {
+        searchButton2.setVisible(true);
+        searchButton.setVisible(false);
+        textName2.setVisible(true);
+        visible();
     }
 
     @FXML
     private void searchButtonClicked() {
         String type = typeChoiceBox.getValue();
         String season = textSeason.getText();
-        String name = textName.getText();
+        String name = textName1.getText();
 
         if(type.equals("Driver")) {
             showDriverStats(DriverStats.getDriverStats(season,name));
@@ -112,6 +137,72 @@ public class MainController {
         else{
             showTeamStats(TeamStats.getTeamStats(season,name));
         }
+    }
+
+    @FXML
+    private void searchButton2Clicked(){
+        String type = typeChoiceBox.getValue();
+        String season = textSeason.getText();
+        String name1 = textName1.getText();
+        String name2 = textName2.getText();
+        if(type.equals("Driver")) {
+            showDriverStatsComp(DriverStats.getDriverStats(season,name1),DriverStats.getDriverStats(season,name2));
+        }
+        else{
+            showTeamStatsComp(TeamStats.getTeamStats(season,name1),TeamStats.getTeamStats(season,name2));
+        }
+
+    }
+
+    public void showTeamStatsComp(TeamStats teamStats1,TeamStats teamStats2) {
+        statsTable.getColumns().clear();
+        statsTable.getItems().clear();
+        statsTable.setVisible(true);
+        TableColumn<TableRow, String> labelColumn = new TableColumn<>("Label");
+        TableColumn<TableRow, String> valueColumn = new TableColumn<>("Value");
+        TableColumn<TableRow, String> value2Column = new TableColumn<>("Value2");
+        labelColumn.setCellValueFactory(new PropertyValueFactory<>("label"));
+        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        value2Column.setCellValueFactory(new PropertyValueFactory<>("value2"));
+        statsTable.getColumns().addAll(labelColumn, valueColumn,value2Column);
+        statsTable.getItems().addAll(
+                new TableRow("Name", teamStats1.getTeamName(), teamStats2.getTeamName()),
+                new TableRow("Drivers", teamStats1.getDrivers().toString(), teamStats2.getDrivers().toString()),
+                new TableRow("Championship position", String.valueOf(teamStats1.getPosition()),String.valueOf(teamStats2.getPosition())),
+                new TableRow("Points", String.valueOf(teamStats1.getPoints()),String.valueOf(teamStats2.getPoints())),
+                new TableRow("Number of wins", String.valueOf(teamStats1.getNumberOfWins()),String.valueOf(teamStats2.getNumberOfWins())),
+                new TableRow("Number of Podiums", String.valueOf(teamStats1.getNumberOfPodiums()),String.valueOf(teamStats2.getNumberOfPodiums())),
+                new TableRow("Number of DNFs", String.valueOf(teamStats1.getNumberOfDNF()),String.valueOf(teamStats2.getNumberOfDNF())),
+                new TableRow("Number of DSQs", String.valueOf(teamStats1.getNumberOfDSQ()),String.valueOf(teamStats2.getNumberOfDSQ())),
+                new TableRow("Number of DNSs", String.valueOf(teamStats1.getNumberOfDNS()),String.valueOf(teamStats2.getNumberOfDNS()))
+        );
+    }
+
+    public void showDriverStatsComp(DriverStats driverStats1, DriverStats driverStats2) {
+        statsTable.getColumns().clear();
+        statsTable.getItems().clear();
+        statsTable.setVisible(true);
+        TableColumn<TableRow, String> labelColumn = new TableColumn<>("Label");
+        TableColumn<TableRow, String> valueColumn = new TableColumn<>("Value");
+        TableColumn<TableRow, String> value2Column = new TableColumn<>("Value2");
+        labelColumn.setCellValueFactory(new PropertyValueFactory<>("label"));
+        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        value2Column.setCellValueFactory(new PropertyValueFactory<>("value2"));
+        statsTable.getColumns().addAll(labelColumn, valueColumn,value2Column);
+        statsTable.getItems().addAll(
+                new TableRow("Name", driverStats1.getName(), driverStats2.getName()),
+                new TableRow("Driver Number", String.valueOf(driverStats1.getDriverNumber()), String.valueOf(driverStats2.getDriverNumber())),
+                new TableRow("Team Name", driverStats1.getTeamName(), driverStats2.getTeamName()),
+                new TableRow("Championship position", String.valueOf(driverStats1.getPosition()), String.valueOf(driverStats2.getPosition())),
+                new TableRow("Points", String.valueOf(driverStats1.getPoints()), String.valueOf(driverStats2.getPoints())),
+                new TableRow("Number of wins", String.valueOf(driverStats1.getNumberOfWins()), String.valueOf(driverStats2.getNumberOfWins())),
+                new TableRow("Number of podiums", String.valueOf(driverStats1.getNumberOfPodiums()), String.valueOf(driverStats2.getNumberOfPodiums())),
+                new TableRow("Average finish position", String.valueOf(driverStats1.getAverageFinishPosition()), String.valueOf(driverStats2.getAverageFinishPosition())),
+                new TableRow("Average points per race", String.valueOf(driverStats1.getAveragePointsPerRace()), String.valueOf(driverStats2.getAveragePointsPerRace())),
+                new TableRow("Number of DNFs", String.valueOf(driverStats1.getNumberOfDNF()), String.valueOf(driverStats2.getNumberOfDNF())),
+                new TableRow("Number of DNSs", String.valueOf(driverStats1.getNumberOfDNS()), String.valueOf(driverStats2.getNumberOfDNS())),
+                new TableRow("Number of DSQs", String.valueOf(driverStats1.getNumberOfDSQ()), String.valueOf(driverStats2.getNumberOfDSQ()))
+        );
     }
 
     /**
