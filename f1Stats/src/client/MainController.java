@@ -6,6 +6,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 
+import java.util.Set;
+
 public class MainController {
     @FXML
     private Pane pane;
@@ -164,6 +166,13 @@ public class MainController {
         labelColumn.setCellValueFactory(new PropertyValueFactory<>("label"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
         value2Column.setCellValueFactory(new PropertyValueFactory<>("value2"));
+        Set<String> lowerIsBetter = Set.of(
+                "Championship position",
+                "Number of DNFs",
+                "Number of DSQs",
+                "Number of DNSs"
+        );
+        differences(value2Column,lowerIsBetter,valueColumn);
         statsTable.getColumns().addAll(labelColumn, valueColumn,value2Column);
         statsTable.getItems().addAll(
                 new TableRow("Name", teamStats1.getTeamName(), teamStats2.getTeamName()),
@@ -188,6 +197,14 @@ public class MainController {
         labelColumn.setCellValueFactory(new PropertyValueFactory<>("label"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
         value2Column.setCellValueFactory(new PropertyValueFactory<>("value2"));
+        Set<String> lowerIsBetter = Set.of(
+                "Championship position",
+                "Average finish position",
+                "Number of DNFs",
+                "Number of DNSs",
+                "Number of DSQs"
+        );
+        differences(value2Column, lowerIsBetter, valueColumn);
         statsTable.getColumns().addAll(labelColumn, valueColumn,value2Column);
         statsTable.getItems().addAll(
                 new TableRow("Name", driverStats1.getName(), driverStats2.getName()),
@@ -204,6 +221,89 @@ public class MainController {
                 new TableRow("Number of DSQs", String.valueOf(driverStats1.getNumberOfDSQ()), String.valueOf(driverStats2.getNumberOfDSQ()))
         );
     }
+
+    private static void differences(TableColumn<TableRow, String> value2Column, Set<String> lowerIsBetter, TableColumn<TableRow, String> valueColumn) {
+        value2Column.setCellFactory(column -> new TableCell<TableRow, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    TableRow row = getTableView().getItems().get(getIndex());
+                    setText(item);
+                    try {
+                        double v1 = Double.parseDouble(row.getValue());
+                        double v2 = Double.parseDouble(row.getValue2());
+                        if(!row.getLabel().equals("Driver Number")){
+                            boolean isLowerBetter = lowerIsBetter.contains(row.getLabel());
+                            boolean highlight = false;
+
+                            if (isLowerBetter) {
+                                if (v2 < v1) {
+                                    highlight = true;
+                                }
+                            } else {
+                                if (v2 > v1) {
+                                    highlight = true;
+                                }
+                            }
+
+                            if (highlight) {
+                                setStyle("-fx-text-fill: #330000; -fx-font-weight: bold");
+                            } else {
+                                setStyle("");
+                            }
+                        }
+                    } catch (NumberFormatException e) {
+                        setStyle("");
+                    }
+                }
+            }
+        });
+        valueColumn.setCellFactory(column -> new TableCell<TableRow, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    TableRow row = getTableView().getItems().get(getIndex());
+                    setText(item);
+                    try {
+                        double v1 = Double.parseDouble(row.getValue());
+                        double v2 = Double.parseDouble(row.getValue2());
+                        if(!row.getLabel().equals("Driver Number")){
+                            boolean isLowerBetter = lowerIsBetter.contains(row.getLabel());
+                            boolean highlight = false;
+
+                            if (isLowerBetter && !row.getLabel().equals("Driver Number")) {
+                                if (v1 < v2) {
+                                    highlight = true;
+                                }
+                            } else {
+                                if (v1 > v2) {
+                                    highlight = true;
+                                }
+                            }
+
+                            if (highlight) {
+                                setStyle("-fx-text-fill: #330000; -fx-font-weight: bold");
+                            } else {
+                                setStyle("");
+                            }
+                        }
+
+                    } catch (NumberFormatException e) {
+                        setStyle("");
+                    }
+                }
+            }
+        });
+    }
+
 
     /**
      * show stats for a driver
