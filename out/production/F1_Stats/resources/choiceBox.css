@@ -3,6 +3,7 @@
     -fx-mark-color: #fbdb93;
 }
 .choice-box > .label {
+    
     -fx-text-fill: #fbdb93;
     -fx-font-size: 13px;
 }
