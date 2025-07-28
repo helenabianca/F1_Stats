@@ -134,7 +134,9 @@ public class MainController {
         String name = textName1.getText();
 
         if(type.equals("Driver")) {
-            showDriverStats(DriverStats.getDriverStats(season,name));
+            DriverStats driverStats = new DriverStats();
+            driverStats = driverStats.getDriverStats(season,name);
+            showDriverStats(driverStats);
         }
         else{
             showTeamStats(TeamStats.getTeamStats(season,name));
@@ -148,7 +150,11 @@ public class MainController {
         String name1 = textName1.getText();
         String name2 = textName2.getText();
         if(type.equals("Driver")) {
-            showDriverStatsComp(DriverStats.getDriverStats(season,name1),DriverStats.getDriverStats(season,name2));
+            DriverStats driverStats1 = new DriverStats();
+            driverStats1 =driverStats1.getDriverStats(season,name1);
+            DriverStats driverStats2 = new DriverStats();
+            driverStats2= driverStats2.getDriverStats(season,name2);
+            showDriverStatsComp(driverStats1,driverStats2);
         }
         else{
             showTeamStatsComp(TeamStats.getTeamStats(season,name1),TeamStats.getTeamStats(season,name2));
@@ -310,28 +316,32 @@ public class MainController {
      * @param driverStats stats
      */
     public void showDriverStats(DriverStats driverStats) {
-        statsTable.getColumns().clear();
-        statsTable.getItems().clear();
-        statsTable.setVisible(true);
-        TableColumn<TableRow, String> labelColumn = new TableColumn<>("Label");
-        TableColumn<TableRow, String> valueColumn = new TableColumn<>("Value");
-        labelColumn.setCellValueFactory(new PropertyValueFactory<>("label"));
-        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-        statsTable.getColumns().addAll(labelColumn, valueColumn);
-        statsTable.getItems().addAll(
-                new TableRow("Name", driverStats.getName()),
-                new TableRow("Driver Number", String.valueOf(driverStats.getDriverNumber())),
-                new TableRow("Team Name", driverStats.getTeamName()),
-                new TableRow("Championship position", String.valueOf(driverStats.getPosition())),
-                new TableRow("Points", String.valueOf(driverStats.getPoints())),
-                new TableRow("Number of wins", String.valueOf(driverStats.getNumberOfWins())),
-                new TableRow("Number of podiums", String.valueOf(driverStats.getNumberOfPodiums())),
-                new TableRow("Average finish position", String.valueOf(driverStats.getAverageFinishPosition())),
-                new TableRow("Average points per race", String.valueOf(driverStats.getAveragePointsPerRace())),
-                new TableRow("Number of DNFs", String.valueOf(driverStats.getNumberOfDNF())),
-                new TableRow("Number of DNSs", String.valueOf(driverStats.getNumberOfDNS())),
-                new TableRow("Number of DSQs", String.valueOf(driverStats.getNumberOfDSQ()))
-        );
+        if (driverStats.getSuccess()) {
+            return;
+        } else {
+            statsTable.getColumns().clear();
+            statsTable.getItems().clear();
+            statsTable.setVisible(true);
+            TableColumn<TableRow, String> labelColumn = new TableColumn<>("Label");
+            TableColumn<TableRow, String> valueColumn = new TableColumn<>("Value");
+            labelColumn.setCellValueFactory(new PropertyValueFactory<>("label"));
+            valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+            statsTable.getColumns().addAll(labelColumn, valueColumn);
+            statsTable.getItems().addAll(
+                    new TableRow("Name", driverStats.getName()),
+                    new TableRow("Driver Number", String.valueOf(driverStats.getDriverNumber())),
+                    new TableRow("Team Name", driverStats.getTeamName()),
+                    new TableRow("Championship position", String.valueOf(driverStats.getPosition())),
+                    new TableRow("Points", String.valueOf(driverStats.getPoints())),
+                    new TableRow("Number of wins", String.valueOf(driverStats.getNumberOfWins())),
+                    new TableRow("Number of podiums", String.valueOf(driverStats.getNumberOfPodiums())),
+                    new TableRow("Average finish position", String.valueOf(driverStats.getAverageFinishPosition())),
+                    new TableRow("Average points per race", String.valueOf(driverStats.getAveragePointsPerRace())),
+                    new TableRow("Number of DNFs", String.valueOf(driverStats.getNumberOfDNF())),
+                    new TableRow("Number of DNSs", String.valueOf(driverStats.getNumberOfDNS())),
+                    new TableRow("Number of DSQs", String.valueOf(driverStats.getNumberOfDSQ()))
+            );
+        }
     }
 
     /**

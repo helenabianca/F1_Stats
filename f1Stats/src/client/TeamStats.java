@@ -43,7 +43,8 @@ public class TeamStats extends Stats{
         int numberOfDSQ = 0;
         for(String driver : drivers){
             String driverId = driver.split(" ")[1].toLowerCase();
-            DriverStats driverStats = DriverStats.getDriverStats(season , driverId);
+            DriverStats driverStats = new DriverStats();
+            driverStats = driverStats.getDriverStats(season , driverId);
             numberOfPodiums += driverStats.getNumberOfPodiums();
             numberOfDNF += driverStats.getNumberOfDNF();
             numberOfDSQ += driverStats.getNumberOfDSQ();
