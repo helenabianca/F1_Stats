@@ -6,6 +6,7 @@ public class DriverStats extends Stats{
     private String name;
     private String teamName;
     private int driverNumber;
+    private boolean success;
 
     public DriverStats() {
         super();
@@ -35,16 +36,23 @@ public class DriverStats extends Stats{
         this.driverNumber = driverNumber;
     }
 
+    public boolean getSuccess(){
+        return success;
+    }
     /**
      * retrieves the data for a driver during a season
      * @param season specified season
      * @param driverId specified driverId
      * @return stats for that driver
      */
-    public static DriverStats getDriverStats(String season, String driverId) {
+    public DriverStats getDriverStats(String season, String driverId) {
         DriverStats driver = new DriverStats();
-        APIConnection.getDriverBasicStats(season, driverId, driver);
-        APIConnection.getOtherStats(season, driverId, driver);
+        boolean b1 = APIConnection.getDriverBasicStats(season, driverId, driver);
+        boolean b2 = APIConnection.getOtherStats(season, driverId, driver);
+        System.out.println(b1);
+        System.out.println(b2);
+        this.success= b1 && b2;
+        System.out.println(this.success);
         return driver;
     }
 

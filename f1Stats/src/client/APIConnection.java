@@ -17,7 +17,7 @@ public class APIConnection {
      * @param driverId specified driverId
      * @param driverStats DriverStats
      */
-    public static void getDriverBasicStats(String season, String driverId, DriverStats driverStats) {
+    public static boolean getDriverBasicStats(String season, String driverId, DriverStats driverStats) {
         try{
             String urlString = "https://f1api.dev/api/" + season + "/drivers-championship";
             URL url = new URL(urlString);
@@ -66,8 +66,10 @@ public class APIConnection {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            Alerts.showAlert("The driver name is not correct");
+            return false;
         }
+        return true;
     }
 
     /**
@@ -76,7 +78,7 @@ public class APIConnection {
      * @param driverId specified driverId
      * @param driverStats DriverStats
      */
-    public static void getOtherStats(String season, String driverId, DriverStats driverStats) {
+    public static boolean getOtherStats(String season, String driverId, DriverStats driverStats) {
         try{
             String urlString = "https://f1api.dev/api/" + season + "/drivers/" + driverId;
             URL url = new URL(urlString);
@@ -148,8 +150,10 @@ public class APIConnection {
                 driverStats.setAverageFinishPosition((double) averagePosition/numberOfRaces);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            Alerts.showAlert("The driver name is not correct");
+            return false;
         }
+        return true;
     }
 
     /**
@@ -201,7 +205,7 @@ public class APIConnection {
                 teamStats.setDrivers(driverList);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            Alerts.showAlert("The team name is not correct");
         }
     }
 }
